@@ -1,0 +1,67 @@
+﻿https://kafka.apache.org/documentation/#quickstart
+
+# Requirements:
+Java 17+
+Download Kafka & extract
+
+
+# install JDK 17+
+apt install -y openjdk-21-jdk
+
+# Generate a Cluster UUID
+KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"
+
+# Format Log Directories
+bin/kafka-storage.sh format --standalone -t $KAFKA_CLUSTER_ID -c config/server.properties
+
+# Start the Kafka Server
+bin/kafka-server-start.sh config/server.properties
+
+# Create a topic to store your events
+bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
+
+# show details partition count of the new topic
+bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092
+
+# Write some events into the topic
+bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
+>This is my first event
+>This is my second event
+You can stop the producer client with Ctrl-C at any time.
+
+# Read the events
+bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+This is my first event
+This is my second event
+You can stop the producer client with Ctrl-C at any time.
+
+# Import/export your data as streams of events with Kafka Connect
+echo "plugin.path=libs/connect-file-4.0.0.jar" >> config/connect-standalone.properties
+echo -e "foo\nbar" > test.txt
+
+
+
+------------------
+# MySQL won't allow to connect from regular user to MySQL root,
+# set root password first before connecting
+
+su
+apt install -y mysql-server mysql-client
+mysql -u root
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass';
+FLUSH PRIVILEGES;
+
+--------------------
+
+# PostgreSQL
+
+# ubuntu 22.04 need to set password
+
+sudo -u postgres psql
+ALTER USER postgres PASSWORD 'mynewpassword'
+
+sudo service postgresql restart
+
+# Then you can create a server in pgadmin
+
