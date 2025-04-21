@@ -39,18 +39,16 @@ You can stop the producer client with Ctrl-C at any time.
 echo "plugin.path=libs/connect-file-4.0.0.jar" >> config/connect-standalone.properties
 echo -e "foo\nbar" > test.txt
 
+# Kafka Connect configuration
+bin/connect-standalone.sh config/connect-standalone.properties config/connect-file-source.properties config/connect-file-sink.properties
 
 
-------------------
-# MySQL won't allow to connect from regular user to MySQL root,
-# set root password first before connecting
 
-su
-apt install -y mysql-server mysql-client
-mysql -u root
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass';
-FLUSH PRIVILEGES;
+
+
+
+
 
 --------------------
 
