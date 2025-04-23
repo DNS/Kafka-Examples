@@ -36,14 +36,22 @@ This is my second event
 You can stop the producer client with Ctrl-C at any time.
 
 # Import/export your data as streams of events with Kafka Connect
+# First, make sure to add connect-file-4.0.0.jar to the plugin.path property in the Connect worker's configuration.
 echo "plugin.path=libs/connect-file-4.0.0.jar" >> config/connect-standalone.properties
 echo -e "foo\nbar" > test.txt
 
 # Kafka Connect configuration
 bin/connect-standalone.sh config/connect-standalone.properties config/connect-file-source.properties config/connect-file-sink.properties
 
+# Process your events with Kafka Streams
 
 
+# Terminate the Kafka environment
+Stop the producer and consumer clients with Ctrl-C, if you haven't done so already.
+Stop the Kafka broker with Ctrl-C.
+
+# If you also want to delete any data of your local Kafka
+rm -rf /tmp/kafka-logs /tmp/kraft-combined-logs
 
 
 
@@ -62,4 +70,14 @@ ALTER USER postgres PASSWORD 'mynewpassword'
 sudo service postgresql restart
 
 # Then you can create a server in pgadmin
+
+
+--------------------
+
+# Kafka - PostgreSQL
+
+https://portable.io/learn/kafka-and-postgresql
+
+
+
 
